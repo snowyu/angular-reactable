@@ -1,0 +1,302 @@
+//$iconSpritePath: "../images/glyphicons-halflings.png";
+//$iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
+$GlyphiconsPath: "./fonts";
+
+@import "compass/css3";
+@import "compass/utilities";
+
+//@import "bootstrap-sass/lib/bootstrap";
+//@import "sass-bootstrap-glyphicons/scss/bootstrap-glyphicons";
+@import "hint.css/src/hint";
+
+$element_color              : rgba(0,0,255,0.3);
+$element_hover_color        : rgba(0,0,255,1);
+$element_active_color       : rgba(0,0,190,1);
+$element_highlight_color    : rgba(247,230,143,0.4);
+$element_read_only_color    : rgba(130,130,130,0.4);
+$blockquote_color           : rgba(0,113,188,0.2);
+
+@mixin highlighted-element($color:$element_highlight_color) {
+    background-color: $color;
+}
+
+
+/* Put your CSS here */
+html, body {
+  margin: 20px;
+}
+
+body {
+    background: #fafafa;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+    &.dragging-x {
+        cursor: col-resize;
+    }
+}
+
+.i-clickable {
+    cursor: pointer;
+}
+.i-slidable {
+    cursor: col-resize;
+}
+
+body.highlighted .i-reactable {
+    @include highlighted-element();
+}
+
+body.collapsed-code {
+    .i-editable {
+        height      : 2.4rem;
+        overflow    : hidden;
+        &::after {
+            position    : absolute;
+            top         : 0;
+            left        : 0;
+            right       : 0;
+            bottom      : 0;
+            content     : "";
+            display     : block;
+            z-index     : 4;
+            @include background-image(linear-gradient(top, rgba(255,255,255,0) 0%, rgba(250,250,248,1) 100%));
+        }
+    }
+}
+
+.CodeMirror {
+    border-radius   : 0;
+    background      : transparent;
+    height          : auto;
+    font-size       : 0.8rem;
+    margin-left     : -53px;
+
+    .CodeMirror-gutters {
+        border      : 0;
+        background  : transparent;
+    }
+
+    .CodeMirror-linenumber {
+        color: $blockquote_color !important;
+    }
+}
+
+.CodeMirror-scroll {
+    height      : auto;
+    overflow-y  : hidden;
+    overflow-x  : auto;
+}
+
+.i-reactable {
+    //display: inline;
+    border-bottom: 1px dotted $element_color;
+    position: relative;
+    @include transition(background-color 0.5s linear);
+    background-color: transparent;
+
+    &[readonly] {
+        border-bottom-color: $element_read_only_color;
+        cursor: not-allowed;
+    }
+
+    &.highlighted {
+        @include highlighted-element();
+    }
+
+    &.editable {
+        &:hover {
+            color: $element_hover_color;
+            border-bottom: 1px solid $element_hover_color;
+        }
+        &.active {
+            color: $element_active_color;
+            border-bottom: 1px solid $element_active_color;
+        }
+    }
+}
+
+.hero-unit {
+    margin: 50px auto 0 auto;
+    width: 80%;
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 30px;
+    background-color: #eee;
+    border-radius: 6px;
+    padding: 60px;
+}
+
+.hero-unit h1 {
+    font-size: 60px;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+
+/* STOP ANIMATION */
+
+.stop {
+    -webkit-animation-play-state:paused;
+    -moz-animation-play-state:paused;
+}
+
+/* Loading Circle */
+.loading-ball {
+    @include border-radius(50px);
+    background-color: rgba(0,0,0,0);
+    opacity:.9;
+    border:5px solid rgba(0,183,229,0.9);
+    border-top:5px solid rgba(0,0,0,0);
+    border-left:5px solid rgba(0,0,0,0);
+    @include box-shadow(0 0 35px #2187e7);
+    //box-shadow: 0 0 35px #2187e7;
+    width:50px;
+    height:50px;
+    margin:0 auto;
+    position:fixed;
+        left:30px;
+        bottom:30px;
+    -moz-animation:spin .5s infinite linear;
+    -webkit-animation:spin .5s infinite linear;
+}
+
+.loading-ball1 {
+    background-color: rgba(0,0,0,0);
+    border:5px solid rgba(0,183,229,0.9);
+    opacity:.9;
+    border-top:5px solid rgba(0,0,0,0);
+    border-left:5px solid rgba(0,0,0,0);
+    border-radius:50px;
+    box-shadow: 0 0 15px #2187e7; 
+    width:30px;
+    height:30px;
+    margin:0 auto;
+    position:fixed;
+        left:40px;
+        bottom:40px;
+    -moz-animation:spinoff .5s infinite linear;
+    -webkit-animation:spinoff .5s infinite linear;
+}
+
+@-moz-keyframes spin {
+    0% { -moz-transform:rotate(0deg); }
+    100% { -moz-transform:rotate(360deg); }
+}
+@-moz-keyframes spinoff {
+    0% { -moz-transform:rotate(0deg); }
+    100% { -moz-transform:rotate(-360deg); }
+}
+@-webkit-keyframes spin {
+    0% { -webkit-transform:rotate(0deg); }
+    100% { -webkit-transform:rotate(360deg); }
+}
+@-webkit-keyframes spinoff {
+    0% { -webkit-transform:rotate(0deg); }
+    100% { -webkit-transform:rotate(-360deg); }
+}
+
+/* Second Loadin Circle */
+
+.loading-circle {
+    background-color: rgba(0,0,0,0);
+    border:5px solid rgba(0,183,229,0.9);
+    opacity:.9;
+    border-right:5px solid rgba(0,0,0,0);
+    border-left:5px solid rgba(0,0,0,0);
+    border-radius:50px;
+    box-shadow: 0 0 35px #2187e7;
+    width:50px;
+    height:50px;
+        margin:0 auto;
+    position:fixed;
+        left:30px;
+        bottom:30px;
+    -moz-animation:spinPulse 1s infinite ease-in-out;
+    -webkit-animation:spinPulse 1s infinite ease-in-out;
+    -o-animation:spinPulse 1s infinite ease-in-out;
+    -ms-animation:spinPulse 1s infinite ease-in-out;
+}
+.loading-circle1 {
+    background-color: rgba(0,0,0,0);
+    border:5px solid rgba(0,183,229,0.9);
+    opacity:.9;
+    border-left:5px solid rgba(0,0,0,0);
+    border-right:5px solid rgba(0,0,0,0);
+    border-radius:50px;
+    box-shadow: 0 0 15px #2187e7;
+    width:30px;
+    height:30px;
+        margin:0 auto;
+        position:fixed;
+        left:40px;
+        bottom:40px;
+    -moz-animation:spinoffPulse 1s infinite linear;
+    -webkit-animation:spinoffPulse 1s infinite linear;
+    -o-animation:spinoffPulse 1s infinite linear;
+    -ms-animation:spinoffPulse 1s infinite linear;
+}
+
+@-moz-keyframes spinPulse {
+    0% { -moz-transform:rotate(160deg); opacity:0; box-shadow:0 0 1px #2187e7;}
+    50% { -moz-transform:rotate(145deg); opacity:1; }
+    100% { -moz-transform:rotate(-320deg); opacity:0; }
+}
+@-moz-keyframes spinoffPulse {
+    0% { -moz-transform:rotate(0deg); }
+    100% { -moz-transform:rotate(360deg);  }
+}
+@-webkit-keyframes spinPulse {
+    0% { -webkit-transform:rotate(160deg); opacity:0; box-shadow:0 0 1px #2187e7; }
+    50% { -webkit-transform:rotate(145deg); opacity:1;}
+    100% { -webkit-transform:rotate(-320deg); opacity:0; }
+}
+@-webkit-keyframes spinoffPulse {
+    0% { -webkit-transform:rotate(0deg); }
+    100% { -webkit-transform:rotate(360deg); }
+}
+
+/* LITTLE BAR */
+
+.loading-barlittle {
+    background-color:#2187e7;  
+    background-image: -moz-linear-gradient(45deg, #2187e7 25%, #a0eaff); 
+    background-image: -webkit-linear-gradient(45deg, #2187e7 25%, #a0eaff);
+    border-left:1px solid #111; border-top:1px solid #111; border-right:1px solid #333; border-bottom:1px solid #333; 
+    width:10px;
+    height:10px;
+    float:left;
+    margin-left:5px;
+    opacity:0.1;
+    -moz-transform:scale(0.7);
+    -webkit-transform:scale(0.7);
+    -moz-animation:move 1s infinite linear;
+    -webkit-animation:move 1s infinite linear;
+}
+#block_1{
+    -moz-animation-delay: .4s;
+    -webkit-animation-delay: .4s;
+ }
+#block_2{
+    -moz-animation-delay: .3s;
+    -webkit-animation-delay: .3s;
+}
+#block_3{
+    -moz-animation-delay: .2s;
+    -webkit-animation-delay: .2s;
+}
+#block_4{
+    -moz-animation-delay: .3s;
+    -webkit-animation-delay: .3s;
+}
+#block_5{
+    -moz-animation-delay: .4s;
+    -webkit-animation-delay: .4s;
+}
+@-moz-keyframes move{
+    0%{-moz-transform: scale(1.2);opacity:1;}
+    100%{-moz-transform: scale(0.7);opacity:0.1;}
+}
+@-webkit-keyframes move{
+    0%{-webkit-transform: scale(1.2);opacity:1;}
+    100%{-webkit-transform: scale(0.7);opacity:0.1;}
+}

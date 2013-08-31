@@ -1,0 +1,27 @@
+{
+  "name": "angular-reactable",
+  "version": "0.0.1",
+  "author": "Riceball LEE", 
+  "ignore": [
+    "package.json",
+    "karma.conf.js",
+    "Gruntfile.js",
+    "test/"
+  ],
+  "dependencies": {
+    "jquery": "~1.9.1",
+    "es5-shim": "~2.0.8",
+    "lodash": "~1.3.1",
+    "hint.css": "snowyu/hint.css#~1.3.1",
+    "angular": "v1.2.0-rc.1",
+    "angular-route": "v1.2.0-rc.1",
+    "angular-resource": "v1.2.0-rc.1",
+    "angular-cookies": "v1.2.0-rc.1",
+    "angular-sanitize": "v1.2.0-rc.1",
+    "angular-animate": "v1.2.0-rc.1"
+  },
+  "devDependencies": {
+    "angular-mocks": "v1.2.0-rc.1",
+    "angular-scenario": "v1.2.0-rc.1"
+  }
+}
