@@ -19,7 +19,7 @@ cd your_app
 bower install angular-reactable --save
 ```
 
-this will install angular-reactable and add the dependency into 'bower.json':
+this will install angular-reactable and add the dependency into 'bower.json' file:
 
 ```json
 dependencies: {
