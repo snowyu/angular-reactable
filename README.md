@@ -61,6 +61,10 @@ Apply the directive to your form elements:
 
 ## directives
 
+the directives are made of reactable directives and helper directives.
+
+### reactable directives
+
 we have these reactable directives:
 
 * iSlidable: slide on the element to change value
@@ -68,14 +72,18 @@ we have these reactable directives:
 * iPlayable: play carousel to change value.
 * iExecutable: the value is script code can be executable.
 
-### Working with ng-model
-
 All the reactable directives plays nicely with ng-model.
 
-and some helper directives:
+#### iSlidable/iClickable/iPlayable
+
+
+
+### helper directives
 
 * iFlash
 * iHighlighted
+
+
 
 # Testing
 
