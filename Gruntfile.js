@@ -1,6 +1,7 @@
 // Generated on 2013-08-06 using generator-angular 0.3.1
 'use strict';
 var LIVERELOAD_PORT = 35729;
+//var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
 var lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT });
 var mountFolder = function (connect, dir) {
   return connect.static(require('path').resolve(dir));
@@ -19,7 +20,8 @@ module.exports = function (grunt) {
   // configurable paths
   var yeomanConfig = {
     app: '.',
-    dist: 'dist'
+    dist: 'dist',
+    tmp: '.tmp'
   };
 
   try {
@@ -34,12 +36,16 @@ module.exports = function (grunt) {
         tasks: ['coffee:dist']
       },
       coffeeTest: {
-        files: ['test/spec/{,*/}*.coffee'],
+        files: ['<%= yeoman.app %>/test/spec/{,*/}*.coffee'],
         tasks: ['coffee:test']
       },
       compass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:server']
+      },
+      imagemin: {
+        files: ['<%= yeoman.app %>/images/**/*.{png,jpg,jpeg}'],
+        tasks: ['imagemin:tmp', 'compass:server']
       },
       livereload: {
         options: {
@@ -54,14 +60,12 @@ module.exports = function (grunt) {
       }
     },
     connect: {
-      options: {
-        port: 9000,
-        // Change this to '0.0.0.0' to access the server from outside.
-        //hostname: 'localhost'
-        hostname: '0.0.0.0'
-      },
       livereload: {
         options: {
+          port: 9000,
+          // Change this to '0.0.0.0' to access the server from outside.
+          //hostname: 'localhost'
+          hostname: '0.0.0.0',
           middleware: function (connect) {
             return [
               lrSnippet,
@@ -70,6 +74,19 @@ module.exports = function (grunt) {
             ];
           }
         }
+      },
+      e2e: {
+        options: {
+          port: 9001,
+          middleware: function (connect) {
+            return [
+              mountFolder(connect, '.tmp'),
+              mountFolder(connect, yeomanConfig.app),
+              // read README to understand why this is necessary
+              //mountFolder(connect, '.')
+            ];
+          }
+        }        
       },
       test: {
         options: {
@@ -311,8 +328,21 @@ module.exports = function (grunt) {
     },
     karma: {
       unit: {
-        configFile: 'karma.conf.js',
+        configFile: '<%= yeoman.app %>/test/karma.conf.js',
         singleRun: true
+      },
+      unit_watch: {
+        configFile: '<%= yeoman.app %>/test/karma.conf.js',
+        singleRun: false,
+        autoWatch: true
+      },
+      e2e: {
+        configFile: '<%= yeoman.app %>/test/karma-e2e.conf.js'
+      },
+      e2e_watch: {
+        configFile: '<%= yeoman.app %>/test/karma-e2e.conf.js',
+        singleRun: false,
+        autoWatch: true
       }
     },
     cdnify: {
@@ -359,7 +389,21 @@ module.exports = function (grunt) {
     'clean:server',
     'concurrent:test',
     'connect:test',
-    'karma'
+    'karma:unit',
+    'connect:e2e',
+    'karma:e2e'
+  ]);
+  grunt.registerTask('unit', [
+    'clean:server',
+    'concurrent:test',
+    'connect:test',
+    'karma:unit'
+  ]);
+  grunt.registerTask('e2e', [
+    'clean:server',
+    'concurrent:test',
+    'connect:e2e',
+    'karma:e2e'
   ]);
 
   grunt.registerTask('build', [
