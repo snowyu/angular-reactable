@@ -149,8 +149,6 @@ angular.module('iReactable', ['ngAnimate'])
             values: null,
             # enable/disable hint
             hintOn: true,
-            # whether flash the element when ngModel changed
-            flashed: true,
             # the hint text
             hint: undefined,
             # the range may be a object, a list or a func
@@ -218,7 +216,6 @@ angular.module('iReactable', ['ngAnimate'])
                     if(!ngModelCtrl) then return # do nothing if no ng-model
                     options = angular.extend({}, defaultOptions, globalOptions)
                     options = angular.extend(options, scope.$eval(attrs[aDirectiveName]))
-                    options.flashed = scope.$eval(attrs.flashed) if attrs.flashed?
                     options.range = angular.extend({}, defaultOptions.range, options.range, scope.$eval(attrs.range))
                     options.values = scope.$eval(attrs.values) if attrs.values
                     options.hint = scope.$eval(attrs.hint) if attrs.hint
