@@ -84,20 +84,20 @@ these reactable directives have following parameters:
 * hintOn: boolean, enable/disable the hint. The default is hintOn.
 * range: this is the most import parameter in these reactable directives.
   * It can be a number: Object
-    * min: the minimum value in the range. the default is -Infinity.
-    * max: the maximum value in the range. the default is +Infinity.
-    * step: the step over in the range. the default is 1.
-    * minIn: boolean, whether the min is included.
-    * maxIn: boolean, whether the max is included.
-    * mulStep: the step multiply constant(realStep=mulStep*step), the default is 1.
+     * min: the minimum value in the range. the default is -Infinity.
+     * max: the maximum value in the range. the default is +Infinity.
+     * step: the step over in the range. the default is 1.
+     * minIn: boolean, whether the min is included.
+     * maxIn: boolean, whether the max is included.
+     * mulStep: the step multiply constant(realStep=mulStep*step), the default is 1.
   * It can be a list: ['first', 'second', 'third']
   * It can be a function to get the next value:
-    * function(value, config, looped)
-      * parameters:
-        * value: the current value
-        * config: the config object
-        * looped: whether looped. the value should be the minimum when the value is exceed the maximum in the range if looped.
-      * return: the next value
+     * function(value, config, looped)
+        * parameters:
+           * value: the current value
+           * config: the config object
+           * looped: whether looped. the value should be the minimum when the value is exceed the maximum in the range if looped.
+        * return: the next value
 * index: the current index of the range. it's not available on number range.
 
 the iPlayable directive has the following special parameters:
