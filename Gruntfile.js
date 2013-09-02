@@ -19,7 +19,7 @@ module.exports = function (grunt) {
 
   // configurable paths
   var yeomanConfig = {
-    app: '.',
+    app: 'demo',
     dist: 'dist',
     tmp: '.tmp'
   };
@@ -32,15 +32,15 @@ module.exports = function (grunt) {
     yeoman: yeomanConfig,
     watch: {
       coffee: {
-        files: ['<%= yeoman.app %>/src/{,*/}*.coffee'],
+        files: ['./src/{,*/}*.coffee', '<%= yeoman.app %>/scripts/{,*/}*.coffee'],
         tasks: ['coffee:dist']
       },
       coffeeTest: {
-        files: ['<%= yeoman.app %>/test/spec/{,*/}*.coffee'],
+        files: ['./test/spec/{,*/}*.coffee'],
         tasks: ['coffee:test']
       },
       compass: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+        files: ['./styles/{,*/}*.{scss,sass}', '<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:server']
       },
       imagemin: {
@@ -53,7 +53,9 @@ module.exports = function (grunt) {
         },
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
+          '{.tmp,.}/styles/{,*/}*.css',
           '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
+          '{.tmp,.}/src/{,*/}*.js',
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
@@ -64,8 +66,8 @@ module.exports = function (grunt) {
         options: {
           port: 9000,
           // Change this to '0.0.0.0' to access the server from outside.
-          //hostname: 'localhost'
-          hostname: '0.0.0.0',
+          hostname: 'localhost',
+          //hostname: '0.0.0.0',
           middleware: function (connect) {
             return [
               lrSnippet,
@@ -83,7 +85,7 @@ module.exports = function (grunt) {
               mountFolder(connect, '.tmp'),
               mountFolder(connect, yeomanConfig.app),
               // read README to understand why this is necessary
-              //mountFolder(connect, '.')
+              mountFolder(connect, '.')
             ];
           }
         }        
@@ -139,7 +141,13 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.app %>/src',
+          cwd: './src',
+          src: '{,*/}*.coffee',
+          dest: '.tmp/scripts',
+          ext: '.js'
+        },{
+          expand: true,
+          cwd: '<%= yeoman.app %>/scripts',
           src: '{,*/}*.coffee',
           dest: '.tmp/scripts',
           ext: '.js'
@@ -157,13 +165,13 @@ module.exports = function (grunt) {
     },
     compass: {
       options: {
-        sassDir: '<%= yeoman.app %>/styles',
+        sassDir: './styles',
         cssDir: '.tmp/styles',
         generatedImagesDir: '.tmp/images/generated',
         imagesDir: '<%= yeoman.app %>/images',
-        javascriptsDir: '<%= yeoman.app %>/scripts',
+        javascriptsDir: '.tmp/scripts',
         fontsDir: '<%= yeoman.app %>/styles/fonts',
-        importPath: '<%= yeoman.app %>/deps',
+        importPath: './deps',
         httpImagesPath: '/images',
         httpGeneratedImagesPath: '/images/generated',
         httpFontsPath: '/styles/fonts',
@@ -281,13 +289,6 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: '<%= yeoman.app %>/deps/sass-bootstrap-glyphicons',
-            dest: '<%= yeoman.app %>/styles',
-            src: [
-              'fonts/*'
-            ]
-          }, {
-            expand: true,
             dot: true,
             cwd: '<%= yeoman.app %>',
             dest: '<%= yeoman.dist %>',
@@ -328,19 +329,19 @@ module.exports = function (grunt) {
     },
     karma: {
       unit: {
-        configFile: '<%= yeoman.app %>/test/karma.conf.js',
+        configFile: './test/karma.conf.js',
         singleRun: true
       },
       unit_watch: {
-        configFile: '<%= yeoman.app %>/test/karma.conf.js',
+        configFile: './test/karma.conf.js',
         singleRun: false,
         autoWatch: true
       },
       e2e: {
-        configFile: '<%= yeoman.app %>/test/karma-e2e.conf.js'
+        configFile: './test/karma-e2e.conf.js'
       },
       e2e_watch: {
-        configFile: '<%= yeoman.app %>/test/karma-e2e.conf.js',
+        configFile: './test/karma-e2e.conf.js',
         singleRun: false,
         autoWatch: true
       }
