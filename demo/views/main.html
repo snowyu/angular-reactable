@@ -1,7 +1,8 @@
-<div class="hero-unit">
+<div>
   <label for='chkReadonly'>Check me to make text readonly: </label><input id="chkReadonly" type="checkbox" ng-model="checked" />
-  <input class="form-control" ng-model="myvar" ng-readonly="checked" i-flash />
-  <h2 ng-model="myvar" ng-bind-template="hi {{myvar}}!" ng-init="myvar=-1" i-slidable="{readonly:true, range:{min:1,max:50, step:1}}" range="{minIn:true, maxIn: false}" ng-readonly="checked">'Allo, 'Allo!</h2>
+  <input class="form-control" type="number" ng-model="myvar" ng-readonly="checked" i-flash />
+  <br/>
+  hi myvar is <h2 ng-model="myvar" ng-init="myvar=-1" i-slidable="{range:{min:1,max:50, step:1}}" range="{minIn:true, maxIn: false}" ng-readonly="checked">{{myvar}}</h2>!
 
   <span ng-model="myvar" i-highlighted='off' i-clickable="{hintOn:false, range:{min:1,max:50, step:1}}" ng-readonly="checked">another {{myvar}}!</span>
   <span ng-model="myvar" ng-bind-template="Third {{myvar}}!" i-clickable="{range:{min:1,max:50, step:1}}" ng-readonly="!checked"></span>

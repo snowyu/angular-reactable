@@ -7,6 +7,14 @@ frameworks = ['ng-scenario'];
 
 // list of files / patterns to load in the browser
 files = [
+  'deps/jquery/jquery.js',
+  'deps/lodash/lodash.js',
+  //ANGULAR_SCENARIO,
+  'deps/angular-scenario/angular-scenario.js',
+  ANGULAR_SCENARIO_ADAPTER,
+  'src/*.coffee',
+  'src/**/*.coffee',
+  'test/e2e/**/*.js',
   'test/e2e/**/*.coffee'
 ];
 

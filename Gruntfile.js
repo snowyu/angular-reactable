@@ -53,15 +53,18 @@ module.exports = function (grunt) {
         },
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
-          '{.tmp,.}/styles/{,*/}*.css',
-          '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
-          '{.tmp,.}/src/{,*/}*.js',
+          '{.tmp,.,<%= yeoman.app %>}/styles/{,*/}*.css',
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
     },
     connect: {
+      options: {
+        port: 9000,
+        // Change this to '0.0.0.0' to access the server from outside.
+        hostname: 'localhost'
+      },
       livereload: {
         options: {
           port: 9000,
@@ -71,6 +74,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               lrSnippet,
+              mountFolder(connect, '.'),
               mountFolder(connect, '.tmp'),
               mountFolder(connect, yeomanConfig.app)
             ];
@@ -134,7 +138,8 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= yeoman.app %>/src/{,*/}*.js'
+        './src/{,*/}*.js',
+        '<%= yeoman.app %>/scripts/{,*/}*.js'
       ]
     },
     coffee: {
@@ -295,7 +300,6 @@ module.exports = function (grunt) {
             src: [
               '*.{ico,png,txt}',
               '.htaccess',
-              'deps/**/*',
               'images/{,*/}*.{gif,webp}',
               'styles/fonts/*'
             ]
@@ -405,6 +409,12 @@ module.exports = function (grunt) {
     'concurrent:test',
     'connect:e2e',
     'karma:e2e'
+  ]);
+  grunt.registerTask('e2e_watch', [
+    'clean:server',
+    'concurrent:test',
+    'connect:e2e',
+    'karma:e2e_watch'
   ]);
 
   grunt.registerTask('build', [
