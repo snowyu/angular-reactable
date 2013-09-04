@@ -27867,7 +27867,14 @@ _jQuery.fn.bindings = function(windowJquery, bindExp) {
       element.style.posLeft;
 
       // TODO(vojta): create event objects with pressed keys to get it working on IE<9
-      var ret = element.fireEvent('on' + eventType);
+      var evnt = document.createEventObject();
+      evnt.clientX = x;
+      evnt.clientY = y;
+      evnt.ctlKey = pressed('ctrl');
+      evnt.altKey = pressed('alt');
+      evnt.shiftKey = pressed('shift');
+      evnt.returnValue = false;
+      var ret = element.fireEvent('on' + eventType, evnt);
       if (inputType == 'submit') {
         while(element) {
           if (element.nodeName.toLowerCase() == 'form') {
@@ -27879,43 +27886,29 @@ _jQuery.fn.bindings = function(windowJquery, bindExp) {
       }
       return ret;
     } else {
-      var evnt,
-          originalPreventDefault,
+      var evnt = document.createEvent('MouseEvents'),
+          originalPreventDefault = evnt.preventDefault,
           appWindow = element.ownerDocument.defaultView,
           fakeProcessDefault = true,
           finalProcessDefault,
           angular = appWindow.angular || {};
 
+      // igor: temporary fix for https://bugzilla.mozilla.org/show_bug.cgi?id=684208
+      angular['ff-684208-preventDefault'] = false;
+      evnt.preventDefault = function() {
+        fakeProcessDefault = false;
+        return originalPreventDefault.apply(evnt, arguments);
+      };
+
       x = x || 0;
       y = y || 0;
+      evnt.initMouseEvent(eventType, true, true, window, 0, x, y, x, y, pressed('ctrl'), pressed('alt'),
+          pressed('shift'), pressed('meta'), 0, element);
 
-      if (document.createEvent) {
-        evnt = document.createEvent('MouseEvents');
-        originalPreventDefault = evnt.preventDefault;
-        // igor: temporary fix for https://bugzilla.mozilla.org/show_bug.cgi?id=684208
-        angular['ff-684208-preventDefault'] = false;
-        evnt.preventDefault = function() {
-          fakeProcessDefault = false;
-          return originalPreventDefault.apply(evnt, arguments);
-        };
-        evnt.initMouseEvent(eventType, true, true, window, 0, x, y, x, y, pressed('ctrl'), pressed('alt'),
-            pressed('shift'), pressed('meta'), 0, element);
+      element.dispatchEvent(evnt);
+      finalProcessDefault = !(angular['ff-684208-preventDefault'] || !fakeProcessDefault);
 
-        element.dispatchEvent(evnt);
-        finalProcessDefault = !(angular['ff-684208-preventDefault'] || !fakeProcessDefault);
-
-        delete angular['ff-684208-preventDefault'];
-      }
-      else if (document.createEventObject) {
-        evnt = document.createEventObject();
-        evnt.clientX = x;
-        evnt.clientY = y;
-        evnt.ctlKey = pressed('ctrl');
-        evnt.altKey = pressed('alt');
-        evnt.shiftKey = pressed('shift');
-        evnt.returnValue = false;
-        finalProcessDefault = element.fireEvent('on'+eventType, evnt);
-      }
+      delete angular['ff-684208-preventDefault'];
 
       return finalProcessDefault;
     }
