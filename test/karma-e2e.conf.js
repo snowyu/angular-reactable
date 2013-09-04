@@ -10,7 +10,7 @@ files = [
   'deps/jquery/jquery.js',
   'deps/lodash/lodash.js',
   //ANGULAR_SCENARIO,
-  'deps/angular-scenario/angular-scenario.js',
+  'test/lib/angular-scenario.js',
   ANGULAR_SCENARIO_ADAPTER,
   'src/*.coffee',
   'src/**/*.coffee',
