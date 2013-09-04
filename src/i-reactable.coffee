@@ -174,13 +174,13 @@ angular.module('iReactable', ['ngAnimate'])
         getNextValueInLoop = (value, config, looped) ->
             if angular.isNumber value
                 range = config.range
-                step = range.step * range.mulStep
+                step = range.step * range.mulStep || 1
                 if !looped
-                    if step > 0
-                        if value >= range.max
-                            return range.max
+                    sign = if step > 0 then 1 else -1
+                    if value >= range.max
+                        return if range.maxIn then range.max else range.max - sign*step
                     else if value <= range.min
-                        return range.min
+                        return if range.minIn then range.min else range.min + sign*step
                 value += step
                 if looped
                     if step > 0       # step > 0?
