@@ -44,22 +44,13 @@ describe 'Directive: iSlidable', () ->
       });
     };
   ###
-  it 'should be slidable', () ->
+  it 'should be slidable on mousemove', () ->
     delta = 15
     el.trigger('mousedown', [], 0, 0)
-    el.trigger('mousemove', [], delta, 0)
 
-    expect(binding('myvar')).toEqual "0"
-    expect(el.text())
-        .toMatch "0"
+    for i in [0..50]
+      el.trigger('mousemove', [], delta, 0)
+      expect(binding('myvar')).toEqual i.toString()
+      expect(el.text()).toMatch i.toString()
 
-    el.trigger('mousemove', [], delta*2-1, 0)
-    expect(binding('myvar')).toEqual "1"
-    expect(el.text())
-        .toMatch "1"
-
-    el.trigger('mousemove', [], delta*3-1, 0)
-    expect(binding('myvar')).toEqual "2"
-    expect(el.text())
-        .toMatch "2"
-    el.trigger('mouseup', [], delta*3, 0)
+    el.trigger('mouseup', [], delta, 0)

@@ -175,11 +175,11 @@ angular.module('iReactable', ['ngAnimate'])
             if angular.isNumber value
                 range = config.range
                 step = range.step * range.mulStep || 1
+                sign = if step > 0 then 1 else -1
                 if !looped
-                    sign = if step > 0 then 1 else -1
-                    if value >= range.max
+                    if sign == 1 and value >= range.max
                         return if range.maxIn then range.max else range.max - sign*step
-                    else if value <= range.min
+                    else if sign== -1 and value <= range.min
                         return if range.minIn then range.min else range.min + sign*step
                 value += step
                 if looped
