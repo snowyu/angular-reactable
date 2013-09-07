@@ -110,6 +110,15 @@ the iPlayable directive has the following special parameters:
 
 #### iExecutable directive
 
+the iExecutable directive treat the ngModel's value as the script source to run.
+And display the running result on the element. 
+
+It has the following special paramters:
+
+* mode: the display result mode
+  * console
+  * canvas
+* language: the script language to run
 
 ### helper directives
 
